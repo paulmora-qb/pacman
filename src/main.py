@@ -1,65 +1,158 @@
 import pygame
-import random
-from board import draw_board
-from colors import BLACK, BLUE
-from pygame.locals import KEYDOWN, K_ESCAPE, QUIT
-from characters import Pacman, Ghost
-
-SCREEN_WIDTH = 500
-SCREEN_HEIGHT = 500
-board_color = BLACK
+from colors import BLACK, BLUE, MAGENTA, WHITE, YELLOW
+from board import boards
+from typing import List
+import math
 
 pygame.init()
 
-screen = draw_board(board_color=board_color)
+board_width = 900
+board_height = 950
+SMALL_DOT_RADIUS = 4
+BIG_DOT_RADIUS = 10
+WALL_WIDTH = 3
+screen = pygame.display.set_mode([board_width, board_height])
 
-running = True
+timer = pygame.time.Clock()
+fps = 60
+
+font = pygame.font.Font("freesansbold.ttf", 20)
+level = boards
 
 
-# Create a custom event for adding a new enemy
+def draw_board(level: List[int]):
+    block_height = (board_height - 50) // 32
+    block_width = (board_width) // 30
+    for i in range(len(level)):
+        for j in range(len(level[i])):
+            if level[i][j] == 1:
+                pygame.draw.circle(
+                    surface=screen,
+                    color=YELLOW,
+                    center=(
+                        j * block_width + (0.5 * block_width),
+                        i * block_height + (0.5 * block_height),
+                    ),
+                    radius=SMALL_DOT_RADIUS,
+                )
+            elif level[i][j] == 2:
+                pygame.draw.circle(
+                    surface=screen,
+                    color=YELLOW,
+                    center=(
+                        j * block_width + (0.5 * block_width),
+                        i * block_height + (0.5 * block_height),
+                    ),
+                    radius=BIG_DOT_RADIUS,
+                )
+            elif level[i][j] == 3:
+                pygame.draw.line(
+                    surface=screen,
+                    color=BLUE,
+                    start_pos=(j * block_width + (0.5 * block_width), i * block_height),
+                    end_pos=(
+                        j * block_width + (0.5 * block_width),
+                        i * block_height + block_height,
+                    ),
+                    width=WALL_WIDTH,
+                )
+            elif level[i][j] == 4:
+                pygame.draw.line(
+                    surface=screen,
+                    color=BLUE,
+                    start_pos=(
+                        j * block_width,
+                        i * block_height + (0.5 * block_height),
+                    ),
+                    end_pos=(
+                        j * block_width + block_width,
+                        i * block_height + (0.5 * block_height),
+                    ),
+                    width=WALL_WIDTH,
+                )
+            elif level[i][j] == 5:
+                pygame.draw.arc(
+                    surface=screen,
+                    color=BLUE,
+                    rect=[
+                        j * block_width - 0.5 * block_width,
+                        i * block_height + 0.5 * block_height,
+                        block_width,
+                        block_height,
+                    ],
+                    start_angle=0,
+                    stop_angle=math.pi / 2,
+                    width=WALL_WIDTH,
+                )
+            elif level[i][j] == 6:
+                pygame.draw.arc(
+                    surface=screen,
+                    color=BLUE,
+                    rect=[
+                        j * block_width + 0.5 * block_width,
+                        i * block_height + 0.5 * block_height,
+                        block_width,
+                        block_height,
+                    ],
+                    start_angle=math.pi / 2,
+                    stop_angle=math.pi,
+                    width=WALL_WIDTH,
+                )
+            elif level[i][j] == 7:
+                pygame.draw.arc(
+                    surface=screen,
+                    color=BLUE,
+                    rect=[
+                        j * block_width + 0.5 * block_width,
+                        i * block_height - 0.5 * block_height,
+                        block_width,
+                        block_height,
+                    ],
+                    start_angle=math.pi,
+                    stop_angle=3 * math.pi / 2,
+                    width=WALL_WIDTH,
+                )
+            elif level[i][j] == 8:
+                pygame.draw.arc(
+                    surface=screen,
+                    color=BLUE,
+                    rect=[
+                        j * block_width - 0.5 * block_width,
+                        i * block_height - 0.5 * block_height,
+                        block_width,
+                        block_height,
+                    ],
+                    start_angle=1.5 * math.pi,
+                    stop_angle=2 * math.pi,
+                    width=WALL_WIDTH,
+                )
+            elif level[i][j] == 9:
+                pygame.draw.line(
+                    surface=screen,
+                    color=WHITE,
+                    start_pos=(
+                        j * block_width,
+                        i * block_height + (0.5 * block_height),
+                    ),
+                    end_pos=(
+                        j * block_width + block_width,
+                        i * block_height + (0.5 * block_height),
+                    ),
+                    width=WALL_WIDTH,
+                )
 
-ghost = Ghost(color=BLUE)
-player = Pacman()
 
-ghosts = pygame.sprite.Group()
-ghosts.add(ghost)
-all_sprites = pygame.sprite.Group()
-all_sprites.add(player)
-all_sprites.add(ghost)
+run = True
+while run:
+    timer.tick(fps)
+    screen.fill(BLACK)
 
-# Main loop
+    draw_board(level)
 
-while running:
-    # Look at every event in the queue
     for event in pygame.event.get():
-        # Did the user hit a key?
-        if event.type == KEYDOWN:
-            # Was it the Escape key? If so, stop the loop.
-            if event.key == K_ESCAPE:
-                running = False
-        # Did the user click the window close button? If so, stop the loop.
-        elif event.type == QUIT:
-            running = False
+        if event.type == pygame.QUIT:
+            run = False
 
-    # Get the set of keys pressed and check for user input
-
-    pressed_keys = pygame.key.get_pressed()
-    player.update(pressed_keys)
-
-    # Update enemy position
-    ghost.update()
-
-    screen.fill(board_color)
-
-    # Draw all sprites
-    for entity in all_sprites:
-        screen.blit(source=entity.surf, dest=entity.rect)
-
-    if pygame.sprite.spritecollideany(player, ghosts):
-        player.kill()
-        running = False
-
-    # Show the display
     pygame.display.flip()
 
 pygame.quit()
