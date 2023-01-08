@@ -3,6 +3,12 @@ import math
 
 import pygame
 
+import turtle
+from matplotlib.colors import to_rgb
+
+
+turtle.color("red")
+
 
 def draw_board(
     screen,
@@ -15,10 +21,12 @@ def draw_board(
     small_dot_radius = board_params.get("small_dot_radius")
     big_dot_radius = board_params.get("big_dot_radius")
     wall_width = board_params.get("wall_width")
-    small_dot_color = board_params.get("small_dot_color")
-    big_dot_color = board_params.get("big_dot_color")
-    wall_color = board_params.get("wall_color")
-    ghost_wall_color = board_params.get("ghost_wall_color")
+
+    small_dot_color = Color(board_params.get("small_dot_color")).rgb
+    big_dot_color = Color(board_params.get("big_dot_color")).rgb
+    # wall_color = Color(board_params.get("wall_color")).rgb
+    wall_color = (255, 255, 255)
+    ghost_wall_color = Color(board_params.get("ghost_wall_color")).rgb
 
     block_height = (board_height - 50) // 32
     block_width = (board_width) // 30

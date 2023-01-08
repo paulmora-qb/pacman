@@ -3,7 +3,7 @@ board_height: 950
 small_dot_radius: 3
 big_dot_radius: 5
 wall_width: 3
-small_dot_color: (255, 255, 0)
-big_dot_color: (255, 255, 0)
-wall_color: (0, 0, 255)
-ghost_wall_color: (255, 255, 255)
+small_dot_color: yellow
+big_dot_color: yellow
+wall_color: blue
+ghost_wall_color: white

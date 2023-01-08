@@ -10,8 +10,8 @@
             "request": "launch",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "program": "./src/main.py",
-            "cwd": "${workspaceFolder}",
+            "program": "main.py",
+            "cwd": "${workspaceFolder}/src",
         }
     ]
 }
