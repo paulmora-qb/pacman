@@ -7,3 +7,4 @@ small_dot_color: yellow
 big_dot_color: yellow
 wall_color: blue
 ghost_wall_color: white
+background_color: black

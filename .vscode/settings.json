@@ -1,4 +1,33 @@
 {
     "python.formatting.provider": "black",
+    "python.formatting.blackArgs": ["--line-length", "88"],
+    "python.linting.enabled": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "workbench.iconTheme": "vscode-icons",
+    "[python]": {
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+      },
+      "editor.defaultFormatter": null
+    },
     "editor.formatOnSave": true,
-}
+    "editor.fontSize": 16,
+    "editor.renderWhitespace": "all",
+    "editor.rulers": [
+      {
+        "column": 88,
+        "color": "#6e6e6e"
+      }
+    ],
+    "html.format.wrapLineLength": 88,
+    "workbench.colorCustomizations": {},
+    "files.insertFinalNewline": true,
+    "[markdown]": {
+      "files.trimTrailingWhitespace": true
+    },
+    "[yaml]": {
+      "editor.autoIndent": "advanced"
+    },
+    "cSpell.enabled": true,
+      "workbench.colorTheme": "Neon Dark Theme"
+  }

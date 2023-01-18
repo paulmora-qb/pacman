@@ -1,13 +1,14 @@
-from typing import List, Any, Dict
+"""Function to draw the board"""
+
 import math
+from typing import Any, Dict, List
 
 import pygame
+from matplotlib import colors
 
-import turtle
-from matplotlib.colors import to_rgb
+from utils.helper import create_color_rgb
 
-
-turtle.color("red")
+colors.to_rgb("blue") * 255
 
 
 def draw_board(
@@ -22,11 +23,10 @@ def draw_board(
     big_dot_radius = board_params.get("big_dot_radius")
     wall_width = board_params.get("wall_width")
 
-    small_dot_color = Color(board_params.get("small_dot_color")).rgb
-    big_dot_color = Color(board_params.get("big_dot_color")).rgb
-    # wall_color = Color(board_params.get("wall_color")).rgb
-    wall_color = (255, 255, 255)
-    ghost_wall_color = Color(board_params.get("ghost_wall_color")).rgb
+    small_dot_color = create_color_rgb(board_params.get("small_dot_color"))
+    big_dot_color = create_color_rgb(board_params.get("big_dot_color"))
+    wall_color = create_color_rgb(board_params.get("wall_color"))
+    ghost_wall_color = create_color_rgb(board_params.get("ghost_wall_color"))
 
     block_height = (board_height - 50) // 32
     block_width = (board_width) // 30
