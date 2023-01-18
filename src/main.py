@@ -4,6 +4,7 @@ import pygame
 
 from board import draw_board
 from board_layout import boards
+from player import draw_player
 from utils.config_loader import load_config
 from utils.helper import create_color_rgb
 
