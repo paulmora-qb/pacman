@@ -13,11 +13,14 @@ def pacman():
 
     pygame.init()
 
+    # TODO: Find a nicer version of dealing with parameter files
     board_config = load_config("board")
-
     board_width = board_config.get("board_width")
     board_height = board_config.get("board_height")
     board_background_color = create_color_rgb(board_config.get("background_color"))
+
+    # TODO: Find a nicer version of dealing with parameter files
+    player_params = load_config("player")
 
     screen = pygame.display.set_mode(size=([board_width, board_height]))
 
@@ -29,10 +32,9 @@ def pacman():
     run = True
     while run:
         timer.tick(fps)
-        screen.fill((0, 0, 0))
+        screen.fill(board_background_color)
         draw_board(screen, level, board_config)
-
-        draw_player(screen)
+        draw_player(screen, player_params)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

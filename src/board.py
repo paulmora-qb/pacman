@@ -6,15 +6,16 @@ from typing import Any, Dict, List
 import pygame
 from matplotlib import colors
 
+from utils.config_loader import load_config
 from utils.helper import create_color_rgb
 
-colors.to_rgb("blue") * 255
+board_params = load_config("board")
 
 
 def draw_board(
     screen,
     level: List[int],
-    board_params: Dict[str, Any],
+    board_params
 ):
 
     board_height = board_params.get("board_height")
